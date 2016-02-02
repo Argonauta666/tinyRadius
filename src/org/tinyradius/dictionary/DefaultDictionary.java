@@ -6,6 +6,8 @@
  */
 package org.tinyradius.dictionary;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -44,7 +46,7 @@ extends MemoryDictionary{
 	static {
 		try {
 			instance = new DefaultDictionary();
-    		InputStream source = DefaultDictionary.class.getClassLoader().getResourceAsStream(DICTIONARY_RESOURCE);
+    		InputStream source = new FileInputStream(new File("./default_dictionary.txt"));
 			DictionaryParser.parseDictionary(source, instance);
 		} catch (IOException e) {
 			throw new RuntimeException("default dictionary unavailable", e);

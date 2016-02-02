@@ -250,7 +250,7 @@ public class AccessRequest extends RadiusPacket {
 	 * @param sharedSecret shared secret
 	 * @return decrypted password
 	 */
-	private String decodePapPassword(byte[] encryptedPass, byte[] sharedSecret) 
+	protected String decodePapPassword(byte[] encryptedPass, byte[] sharedSecret) 
 	throws RadiusException {
 		if (encryptedPass == null || encryptedPass.length < 16) {
 			// PAP passwords require at least 16 bytes
@@ -349,22 +349,22 @@ public class AccessRequest extends RadiusPacket {
      * Temporary storage for the unencrypted User-Password
      * attribute.
      */
-    private String password;
+    protected String password;
     
     /**
      * Authentication protocol for this access request.
      */
-    private String authProtocol = AUTH_PAP;
+    protected String authProtocol = AUTH_PAP;
 
 	/**
 	 * CHAP password from a decoded CHAP Access-Request.
 	 */
-	private byte[] chapPassword;
+	protected byte[] chapPassword;
 
 	/**
 	 * CHAP challenge from a decoded CHAP Access-Request.
 	 */
-	private byte[] chapChallenge;
+	protected byte[] chapChallenge;
 
 	/**
 	 * Random generator
@@ -379,17 +379,17 @@ public class AccessRequest extends RadiusPacket {
 	/**
 	 * Radius attribute type for User-Password attribute.
 	 */
-	private static final int USER_PASSWORD = 2;
+	protected static final int USER_PASSWORD = 2;
 
 	/**
 	 * Radius attribute type for CHAP-Password attribute.
 	 */
-	private static final int CHAP_PASSWORD = 3;
+	protected static final int CHAP_PASSWORD = 3;
 	
 	/**
 	 * Radius attribute type for CHAP-Challenge attribute.
 	 */
-	private static final int CHAP_CHALLENGE = 60;
+	protected static final int CHAP_CHALLENGE = 60;
 	
 	/**
 	 * Logger for logging information about malformed packets

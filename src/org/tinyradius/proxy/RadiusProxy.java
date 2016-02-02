@@ -249,7 +249,7 @@ extends RadiusServer {
 	 * without a received response.
 	 * Key: Proxy Index (String), Value: RadiusProxyConnection
 	 */ 
-	private Map proxyConnections = new HashMap();
+	protected Map proxyConnections = new HashMap();
 
 	private int proxyPort = 1814;
 	private DatagramSocket proxySocket = null;	

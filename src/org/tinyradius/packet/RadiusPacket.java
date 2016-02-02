@@ -568,7 +568,7 @@ public class RadiusPacket {
 	 * @exception IOException IO error
 	 * @exception RadiusException malformed packet
 	 */
-	public static RadiusPacket decodeRequestPacket(Dictionary dictionary, InputStream in, String sharedSecret) 
+	public RadiusPacket decodeRequestPacket(Dictionary dictionary, InputStream in, String sharedSecret) 
 	throws IOException, RadiusException {
 		return decodePacket(dictionary, in, sharedSecret, null);
 	}
@@ -605,6 +605,12 @@ public class RadiusPacket {
 		return nextPacketId;
 	}
 	
+	protected static AccessRequestBuilder accessRequestBuilder = new AccessRequestBuilder() {
+		public AccessRequest createAccessRequest() {
+			return new AccessRequest();
+		}
+	};
+	
 	/**
 	 * Creates a RadiusPacket object. Depending on the passed type, the
 	 * appropiate successor is chosen. Sets the type, but does not touch
@@ -616,7 +622,7 @@ public class RadiusPacket {
 		RadiusPacket rp;
 		switch (type) {
 		case ACCESS_REQUEST:
-			rp = new AccessRequest();
+			rp = accessRequestBuilder.createAccessRequest();
 			break;
 		
 		case ACCOUNTING_REQUEST:
@@ -956,7 +962,7 @@ public class RadiusPacket {
 	 * @return byte array with encoded attributes
 	 * @throws IOException error writing data
 	 */
-	protected byte[] getAttributeBytes() 
+	public byte[] getAttributeBytes() 
 	throws IOException {
 		ByteArrayOutputStream bos = new ByteArrayOutputStream(MAX_PACKET_LENGTH);
 		for (Iterator i = attributes.iterator(); i.hasNext();) {
@@ -1007,4 +1013,7 @@ public class RadiusPacket {
 	 */
 	private static SecureRandom random = new SecureRandom();
 	
+	public static interface AccessRequestBuilder {
+		AccessRequest createAccessRequest();
+	}
 }
