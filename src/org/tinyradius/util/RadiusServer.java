@@ -106,8 +106,10 @@ public abstract class RadiusServer {
 						e.printStackTrace();
 						logger.fatal("auth thread stopped by exception", e);
 					} finally {
-						authSocket.close();
-						logger.debug("auth socket closed");
+						if (authSocket != null && (! authSocket.isClosed())) {
+							authSocket.close();
+							logger.debug("auth socket closed");
+						}
 					}
 				}
 			}.start();
@@ -513,7 +515,7 @@ public abstract class RadiusServer {
 	private int socketTimeout = 3000;
 	private List receivedPackets = new LinkedList();
 	private long duplicateInterval = 30000; // 30 s
-	private boolean closing = false;
+	protected boolean closing = false;
 	private static Log logger = LogFactory.getLog(RadiusServer.class);
 	
 }
